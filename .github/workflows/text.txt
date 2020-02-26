@@ -1,0 +1,13 @@
+const pipe = <T>(...fns: $ReadOnlyArray<T => T>): (T => T) => {
+  return (param) => {
+    return fns.reduce((result, fn) => fn(result), param);
+  };
+}
+
+function plus5(x) { return x + 5; }
+function times3(x) { return x * 3; }
+const plus5times3 = pipe(plus5, times3);
+
+(plus5times3(6): number);
+// expected error
+(plus5times3(6): string);
